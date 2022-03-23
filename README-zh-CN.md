@@ -6,6 +6,11 @@
 ### 简体中文|[English](https://github.com/f0ng/log4j2burpscanner/blob/main/README.md)
 ## how to use? download the source code and compile it
 ### 默认dnslog选取 https://dns.xn--9tr.com/
+
+# 0.19.1 update
+## 2022-3-23
+增加https://dns.xn--9tr.com/ post获取结果支持，使其可用
+
 # 0.18 更新
 ## 2021-12-25
 1.Send to log4j2 Scanner使用jndi:的bypass payload进行测试，目前包含以下三种`j${::-n}di:`、 `jn${env::-}di:`、`j${sys:k5:-nD}${lower:i${web:k5:-:}}`

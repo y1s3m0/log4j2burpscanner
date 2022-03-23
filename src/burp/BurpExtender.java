@@ -17,8 +17,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import okhttp3.Call;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -244,7 +246,7 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
         }
         // 查询logxn是否可以访问
         try{
-            String indexUrl = "https://log.xn--9tr.com/new_gen";
+            String indexUrl = "https://dig.pm/new_gen";
             Request loginReq = new Request.Builder()
                     .url(indexUrl)
                     .get()
@@ -277,8 +279,8 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
             logxn_dnslog = logxn_dnslog.substring(0,logxn_dnslog.length()-1);
             logxn_dnslog_token = jsonObject.getString("token"); // 读取token，dnslog_token
         }catch (Exception e){
-            logxn_dnslog = "log.xn--9tr.com can't access,need to configure ceye api";
-            logxn_dnslog_token = "log.xn--9tr.com can't access,need to configure ceye api";
+            logxn_dnslog = "dig.pm can't access,need to configure ceye api";
+            logxn_dnslog_token = "dig.pm can't access,need to configure ceye api";
             logxn = false;
         }
 
@@ -314,8 +316,8 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
         callbacks.setExtensionName("log4j2burpscanner");
         this.stdout.println("===========================");
         this.stdout.println("[+]   load successful!     ");
-        this.stdout.println("[+] log4j2burpscanner v0.18.6");
-        this.stdout.println("[+]      code by f0ng      ");
+        this.stdout.println("[+] log4j2burpscanner v0.19.1");
+        this.stdout.println("[+]      code by  y1s3m0     ");
         this.stdout.println("===========================");
 
 //        this.stdout.println("burp的dnslog为" + burp_dnslog);
@@ -326,7 +328,7 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
         if (this.logxn_dnslog.contains("configure ceye api")){
 
         }else {
-            this.stdout.println("You also can request to    https://log.xn--9tr.com/" + this.logxn_dnslog_token + "    to see dnslog");
+            this.stdout.println("You also can request to    https://dig.pm/?token="+this.logxn_dnslog_token.trim()+"&key="+this.logxn_dnslog.trim()+"&domain=dns.1433.eu.org"+"    to see dnslog");
         }
 
         String finalLogxn_dnslog1 = this.logxn_dnslog;
@@ -537,7 +539,7 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
                             } else if (use_dnslog.contains("need to configure ceye api")) {
                                 testContent = "Fail!\nyou need to Configure dnslog and the default dnslog can't access";
                             } else {
-                                String ceyeurl = "https://log.xn--9tr.com/" + finalLogxn_dnslog_token;
+                                String ceyeurl = "https://dig.pm/get_results";
                                 long start = System.currentTimeMillis();
                                 OkHttpClient client = new OkHttpClient();
                                 String indexUrl = ceyeurl;
@@ -1255,7 +1257,7 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
 
         // todo header头里的host匹配
 
-        if (host.equals("log.xn--9tr.com")) // 白名单设置
+        if (host.equals("dig.pm")) // 白名单设置
             return null;
 
         if ( white_lists.length > 0 && !white_lists[0].equals("")) { // 判断白名单不为空
@@ -1812,11 +1814,15 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
 //                if (words_vuln.length() > 20)
 //                    words_vuln = words_vuln.substring(words_vuln.length() - 20);
                 OkHttpClient client = new OkHttpClient();
-                String indexUrl = "https://log.xn--9tr.com/" + this.logxn_dnslog_token.trim();
+                String indexUrl = "https://dig.pm/get_results";
 //                stdout.println(indexUrl);
+
+                FormBody.Builder builder = new FormBody.Builder();   
+                builder.add("token",this.logxn_dnslog_token.trim());
+                FormBody post_body = builder.build();  
                 Request loginReq = new Request.Builder()
                         .url(indexUrl)
-                        .get()
+                        .post(post_body)
                         .build();
                 try {
                     Robot r = new Robot();
@@ -2142,7 +2148,7 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
             String request_header_host = headers_to_host(request_header) ;
 //            stdout.println(request_header_host);
 
-            if (host.equals("log.xn--9tr.com")) // 白名单设置
+            if (host.equals("dig.pm")) // 白名单设置
                 return ;
 
             if ( !BurpExtender.this.whitelists_area.getText().trim().equals("") ) { // 判断白名单不为空
@@ -2712,11 +2718,15 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
                                     if (words_vuln.length() > 20)
                                         words_vuln = words_vuln.substring(words_vuln.length() - 20);
                                     OkHttpClient client = new OkHttpClient();
-                                    String indexUrl = "https://log.xn--9tr.com/" + BurpExtender.this.logxn_dnslog_token.trim();
+                                    String indexUrl = "https://dig.pm/get_results";
 //                stdout.println(indexUrl);
+
+                                    FormBody.Builder builder = new FormBody.Builder();   
+                                    builder.add("token",BurpExtender.this.logxn_dnslog_token.trim());
+                                    FormBody post_body = builder.build();  
                                     Request loginReq = new Request.Builder()
                                             .url(indexUrl)
-                                            .get()
+                                            .post(post_body)
                                             .build();
                                     try {
                                         Robot r = new Robot();

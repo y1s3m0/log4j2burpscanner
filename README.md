@@ -5,9 +5,9 @@
 ## how to use? [releases](https://github.com/f0ng/log4j2burpscanner/releases/) download the latest plugin
 ### [简体中文](https://github.com/f0ng/log4j2burpscanner/blob/main/README-zh-CN.md)|English
 ### default dnslog https://dns.xn--9tr.com/   github: [DNSLog-Platform-Golang](https://github.com/yumusb/DNSLog-Platform-Golang)
-#0.19.1 update
+# 0.19.1 update
 ## 2022-3-23
-增加https://dns.xn--9tr.com/ post支持，使其可用
+增加https://dns.xn--9tr.com/ post获取结果支持，使其可用
 
 # 0.18 update
 ## 2021-12-25
